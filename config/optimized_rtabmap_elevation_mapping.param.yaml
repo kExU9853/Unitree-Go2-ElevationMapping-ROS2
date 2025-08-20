@@ -1,0 +1,51 @@
+/**:
+  ros__parameters:
+    # frame IDs - coordinate frames adapted for RTAB-Map
+    map_frame: "map"
+    robot_frame: "camera_link"  # use camera_link as robot frame
+    sensor_frame: "camera_depth_optical_frame"  # D435i depth camera frame
+    
+    # pose update - temporarily disable pose update to avoid time sync issues
+    use_pose_update: false  # disable pose update
+    pose_cache_size: 10
+    
+    # visibility clean up
+    use_visibility_clean_up: true
+    extract_vaild_area: true
+
+    # grid map parameters - optimized map parameters
+    grid_map:
+      logger_name: "ElevationMap"
+      lateral_length: 10.0  # reduce map size
+      longitudinal_length: 10.0
+      resolution: 0.05
+      initial_position_x: 0.0
+      initial_position_y: 0.0
+      min_normal_variance: 0.0001
+      max_normal_variance: 0.05
+      min_horizontal_variance: 0.0025
+      max_horizontal_variance: 0.5
+      mahalanobis_distance_thres: 2.5
+      multi_height_noise: 0.00009
+      scanning_duration: 0.5
+      increase_height_alpha: 0.1
+
+    # D435I sensor parameters (optimized for static environment)
+    sensor:
+      logger_name: StructureLightProcessor
+      type: "realsense"
+      cutoff_min_depth: 0.2
+      cutoff_max_depth: 3.0  # reduce maximum depth range
+      normal_factor_a: 0.000611
+      normal_factor_b: 0.003587
+      normal_factor_c: 0.3515
+      normal_factor_d: 0.0
+      normal_factor_e: 1.0
+      lateral_factor: 0.01576
+      use_voxel_filter: true
+      voxel_leaf_size: 0.05
+      pass_filter_lower_threshold: -1.0  # adjust height range
+      pass_filter_upper_threshold: 1.0
+
+    robot_motion_updater:
+      logger_name: RobotMotionUpdater 

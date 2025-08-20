@@ -17,10 +17,10 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(grid_map_msgs REQUIRED)
-find_package(grid_map_ros REQUIRED)
-find_package(grid_map_core REQUIRED)
-find_package(grid_map_filters REQUIRED)
+find_package(grid_map_msgs)
+find_package(grid_map_ros)
+find_package(grid_map_core)
+find_package(grid_map_filters)
 
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
@@ -52,10 +52,6 @@ endif()
 
 
 set(dependencies
-  grid_map_msgs
-  grid_map_core
-  grid_map_ros
-  grid_map_filters
   rclcpp
   geometry_msgs
   tf2_eigen
@@ -64,6 +60,20 @@ set(dependencies
   filters
   message_filters
 )
+
+# only add grid_map packages if found
+if(grid_map_msgs_FOUND)
+  list(APPEND dependencies grid_map_msgs)
+endif()
+if(grid_map_core_FOUND)
+  list(APPEND dependencies grid_map_core)
+endif()
+if(grid_map_ros_FOUND)
+  list(APPEND dependencies grid_map_ros)
+endif()
+if(grid_map_filters_FOUND)
+  list(APPEND dependencies grid_map_filters)
+endif()
 add_executable(${PROJECT_NAME}_node
   src/elevation_mapping_node.cpp
   src/ElevationMapping.cpp
